@@ -1,0 +1,26 @@
+{
+  "itemGroup.extramodules2": "ExtraModules2 Modules",
+
+  "item.extramodules2.item_draconic_potion_curer": "Draconic Potion Curer Module",
+
+  "item.extramodules2.item_wyvern_oxygen_storage": "Wyvern Oxygen Storage Module",
+  "item.extramodules2.item_draconic_oxygen_storage": "Draconic Oxygen Storage Module",
+  "item.extramodules2.item_chaotic_oxygen_storage": "Chaotic Oxygen Storage Module",
+
+  "item.extramodules2.item_wyvern_defense_brain": "Wyvern Defense Brain Module",
+  "item.extramodules2.item_draconic_defense_brain": "Draconic Defense Brain Module",
+  "item.extramodules2.item_chaotic_defense_brain": "Chaotic Defense Brain Module",
+
+  "module_type.draconicevolution.oxygen_storage.name": "Oxygen Storage",
+  "module_type.draconicevolution.potion_curer.name": "Potion Curer",
+  "module_type.draconicevolution.defense_brain.name": "Defense Brain",
+
+  "module.extramodules2.oxygen_storage.oxygen_storage": "Oxygen Storage",
+  "module.extramodules2.oxygen_storage.refill_rate": "Refill Rate",
+  "module.extramodules2.oxygen_storage.oxygen": "Oxygen",
+  "module.extramodules2.defense_brain.rage": "Rage Progress",
+
+  "item_prop.draconicevolution.oxygen_mod.consume_oxygen": "Use Oxygen",
+  "item_prop.draconicevolution.potion_cure_mod.cure_potions": "Cure Bad Effects",
+  "item_prop.draconicevolution.defense_brain_mod.defend_player": "Defense System Toggle"
+}
