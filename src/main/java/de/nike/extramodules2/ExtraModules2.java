@@ -5,7 +5,9 @@ import com.brandon3055.draconicevolution.api.capability.DECapabilities;
 import com.brandon3055.draconicevolution.api.capability.ModuleProvider;
 import com.brandon3055.draconicevolution.api.modules.Module;
 import com.brandon3055.draconicevolution.api.modules.items.ModuleItem;
+import de.nike.extramodules2.entities.EMEntities;
 import de.nike.extramodules2.items.EMItemData;
+import de.nike.extramodules2.items.EMItems;
 import de.nike.extramodules2.modules.EMModules;
 import de.nike.extramodules2.network.ModuleNetwork;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -73,6 +75,8 @@ public class ExtraModules2 {
 
         EMItemData.init(modEventBus);
         EMModules.init(modEventBus);
+        EMEntities.register(modEventBus);
+        EMItems.init(modEventBus);
         ModuleNetwork.init(modEventBus);
 
 

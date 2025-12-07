@@ -1,6 +1,9 @@
 {
   "itemGroup.extramodules2": "ExtraModules2 Modules",
 
+  "item.extramodules2.wyvern_apple": "Wyvern Apple",
+  "item.extramodules2.draconic_apple": "Draconic Apple",
+
   "item.extramodules2.item_draconic_potion_curer": "Draconic Potion Curer Module",
 
   "item.extramodules2.item_wyvern_oxygen_storage": "Wyvern Oxygen Storage Module",
@@ -19,6 +22,8 @@
   "module.extramodules2.oxygen_storage.refill_rate": "Refill Rate",
   "module.extramodules2.oxygen_storage.oxygen": "Oxygen",
   "module.extramodules2.defense_brain.rage": "Rage Progress",
+  "module.extramodules2.defense_brain.rage_duration": "Rage Duration",
+  "module.extramodules2.defense_brain.tick_cost": "Energy Cost",
 
   "item_prop.draconicevolution.oxygen_mod.consume_oxygen": "Use Oxygen",
   "item_prop.draconicevolution.potion_cure_mod.cure_potions": "Cure Bad Effects",
