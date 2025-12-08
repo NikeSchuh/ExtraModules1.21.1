@@ -128,6 +128,7 @@ dependencies {
     implementation "blank:BrandonsCore:1.21.1-3.2.1.309"
     implementation "blank:CodeChickenLib:1.21.1-4.6.1.526"
     implementation "blank:Draconic-Evolution:1.21.1-3.1.4.630"
+    implementation "blank:curios-neoforge:9.5.1+1.21.1"
 
     localRuntime "blank:jei-1.21.1-neoforge:19.21.2.313"
 

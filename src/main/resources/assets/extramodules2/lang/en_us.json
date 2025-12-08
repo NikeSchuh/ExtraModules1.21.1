@@ -1,8 +1,16 @@
 {
   "itemGroup.extramodules2": "ExtraModules2 Modules",
 
+  "item.extramodules2.advanced_module_core": "Advanced Module Core",
+  "item.extramodules2.superior_module_core": "Superior Module Core",
+  "item.extramodules2.module_controller": "Module Controller",
+  "item.extramodules2.elder_guardian_brain": "Elder Guardian Brain",
+  "item.extramodules2.elder_guardian_parts": "Elder Guardian Parts",
+
   "item.extramodules2.wyvern_apple": "Wyvern Apple",
   "item.extramodules2.draconic_apple": "Draconic Apple",
+  "item.extramodules2.anti_potion": "§bAnti Potion",
+  "item.extramodules2.anti_potion.lore": "§7Removes all §cbad §7effects.",
 
   "item.extramodules2.item_draconic_potion_curer": "Draconic Potion Curer Module",
 
@@ -14,9 +22,14 @@
   "item.extramodules2.item_draconic_defense_brain": "Draconic Defense Brain Module",
   "item.extramodules2.item_chaotic_defense_brain": "Chaotic Defense Brain Module",
 
+  "item.extramodules2.item_wyvern_defense_module": "Wyvern Defense Module",
+  "item.extramodules2.item_draconic_defense_module": "Draconic Defense Module",
+  "item.extramodules2.item_chaotic_defense_module": "Chaotic Defense Module",
+
   "module_type.draconicevolution.oxygen_storage.name": "Oxygen Storage",
   "module_type.draconicevolution.potion_curer.name": "Potion Curer",
   "module_type.draconicevolution.defense_brain.name": "Defense Brain",
+  "module_type.draconicevolution.defense_module.name": "Defense Module",
 
   "module.extramodules2.oxygen_storage.oxygen_storage": "Oxygen Storage",
   "module.extramodules2.oxygen_storage.refill_rate": "Refill Rate",
@@ -24,8 +37,56 @@
   "module.extramodules2.defense_brain.rage": "Rage Progress",
   "module.extramodules2.defense_brain.rage_duration": "Rage Duration",
   "module.extramodules2.defense_brain.tick_cost": "Energy Cost",
+  "module.extramodules2.defense_brain.spread_range": "Lightning Spread Range",
+  "module.extramodules2.defense_brain.max_spreads": "Maximum Spreads",
+  "module.extramodules2.defense.defense_damage": "Defense Damage",
 
   "item_prop.draconicevolution.oxygen_mod.consume_oxygen": "Use Oxygen",
   "item_prop.draconicevolution.potion_cure_mod.cure_potions": "Cure Bad Effects",
-  "item_prop.draconicevolution.defense_brain_mod.defend_player": "Defense System Toggle"
+  "item_prop.draconicevolution.defense_brain_mod.defend_player": "Defense System Toggle",
+
+  "item.extramodules2.wyvern_effect_necklace": "§eWyvern Effect Necklace",
+  "item.extramodules2.draconic_effect_necklace": "§bDraconic Effect Necklace",
+  "item.extramodules2.chaotic_effect_necklace": "§dChaotic Effect Necklace",
+
+  "item.minecraft.potion.effect.health_boost": "Potion of Hearts",
+  "item.minecraft.potion.effect.strong_health_boost": "Potion of Hearts",
+  "item.minecraft.potion.effect.wither": "Potion of Decay",
+  "item.minecraft.potion.effect.strong_wither": "Potion of Decay",
+  "item.minecraft.potion.effect.chaos_poisoning": "Potion of Chaos",
+  "item.minecraft.potion.effect.bad_omen": "Potion of Bad Omen",
+  "item.minecraft.potion.effect.haste": "Potion of Haste",
+  "item.minecraft.potion.effect.strong_haste": "Potion of Haste",
+
+  "item.minecraft.splash_potion.effect.health_boost": "Splash Potion of Hearts",
+  "item.minecraft.splash_potion.effect.strong_health_boost": "Splash Potion of Hearts",
+  "item.minecraft.splash_potion.effect.wither": "Splash Potion of Decay",
+  "item.minecraft.splash_potion.effect.strong_wither": "§cSplash Potion of Decay",
+  "item.minecraft.splash_potion.effect.chaos_poisoning": "Splash Potion of Chaos",
+  "item.minecraft.splash_potion.effect.bad_omen": "Splash Potion of Bad Omen",
+  "item.minecraft.splash_potion.effect.haste": "Splash Potion of Haste",
+  "item.minecraft.splash_potion.effect.strong_haste": "Splash Potion of Haste",
+
+  "item.minecraft.lingering_potion.effect.health_boost": "Lingering Potion of Hearts",
+  "item.minecraft.lingering_potion.effect.strong_health_boost": "Lingering Potion of Hearts",
+  "item.minecraft.lingering_potion.effect.wither": "Lingering Potion of Decay",
+  "item.minecraft.lingering_potion.effect.strong_wither": "Lingering Potion of Decay",
+  "item.minecraft.lingering_potion.effect.chaos_poisoning": "Lingering Potion of Chaos",
+  "item.minecraft.lingering_potion.effect.bad_omen": "Lingering Potion of Bad Omen",
+  "item.minecraft.lingering_potion.effect.haste": "Lingering Potion of Haste",
+  "item.minecraft.lingering_potion.effect.strong_haste": "Lingering Potion of Haste",
+
+  "item.minecraft.tipped_arrow.effect.health_boost": "Arrow of Hearts",
+  "item.minecraft.tipped_arrow.effect.strong_health_boost": "Arrow of Hearts",
+  "item.minecraft.tipped_arrow.effect.wither": "Arrow of Decay",
+  "item.minecraft.tipped_arrow.effect.strong_wither": "Arrow of Decay",
+  "item.minecraft.tipped_arrow.effect.chaos_poisoning": "Arrow of Chaos",
+  "item.minecraft.tipped_arrow.effect.bad_omen": "Arrow of Bad Omen",
+  "item.minecraft.tipped_arrow.effect.haste": "Arrow of Haste",
+  "item.minecraft.tipped_arrow.effect.strong_haste": "Arrow of Haste",
+
+  "effect.extramodules2.chaos_poisoning": "Chaos Poisoning",
+
+  "death.attack.draconic_lightning_chain": "%1$s was obliterated by draconic lightning from %2$s",
+  "death.attack.chaos_poisoning": "%1$s was liquefied by chaos"
 }

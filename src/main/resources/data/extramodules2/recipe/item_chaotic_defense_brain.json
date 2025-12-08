@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#P#",
+    "ABA",
+    "#G#"
+  ],
+  "key": {
+    "#": {
+      "item": "draconicevolution:large_chaos_frag"
+    },
+    "B": {
+      "item": "extramodules2:item_draconic_defense_brain"
+    },
+    "A": {
+      "item": "draconicevolution:chaotic_core"
+    },
+    "P": {
+      "item": "draconicevolution:item_chaotic_aoe"
+    },
+    "G": {
+      "item": "draconicevolution:item_chaotic_speed"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_chaotic_defense_brain",
+    "count": 1
+  }
+}

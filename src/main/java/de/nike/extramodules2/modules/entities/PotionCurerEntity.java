@@ -54,7 +54,7 @@ public class PotionCurerEntity extends ModuleEntity {
 
     public PotionCurerEntity(Module<?> module) {
         super(module);
-        this.curePotions = new BooleanProperty("cure_potions", true)
+        this.curePotions = new BooleanProperty("potion_cure_mod.cure_potions", true)
                 .setFormatter(ConfigProperty.BooleanFormatter.YES_NO);
     }
 
@@ -117,7 +117,7 @@ public class PotionCurerEntity extends ModuleEntity {
 
     @Override
     public void loadEntityFromStack(ItemStack stack, ModuleContext context) {
-        this.curePotions = stack.getOrDefault(ItemData.BOOL_ITEM_PROP_1, new BooleanProperty("cure_potions", true)
+        this.curePotions = stack.getOrDefault(ItemData.BOOL_ITEM_PROP_1, new BooleanProperty("potion_cure_mod.cure_potions", true)
                 .setFormatter(ConfigProperty.BooleanFormatter.YES_NO)).copy();
     }
 

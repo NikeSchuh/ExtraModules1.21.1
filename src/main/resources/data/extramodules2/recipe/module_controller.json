@@ -1,0 +1,50 @@
+{
+  "type": "draconicevolution:fusion_crafting",
+  "catalyst": {
+    "item": "draconicevolution:draconic_energy_core"
+  },
+  "ingredients": [
+    {
+      "consume": true,
+      "ingredient": { "tag": "c:gems/diamond" }
+    },
+    {
+      "consume": true,
+      "ingredient": { "tag": "c:gems/diamond" }
+    },
+    {
+      "consume": true,
+      "ingredient": { "item": "minecraft:clock" }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "minecraft:ender_eye"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "minecraft:ender_eye"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "minecraft:prismarine_shard"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "minecraft:prismarine_shard"
+      }
+    }
+  ],
+  "result": {
+    "id": "extramodules2:module_controller",
+    "count": 1
+  },
+  "techLevel": "wyvern",
+  "totalEnergy": 1000000
+}

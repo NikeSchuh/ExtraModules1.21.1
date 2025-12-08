@@ -17,16 +17,4 @@ public class EMFoods {
            .alwaysEdible()
            .build();
 
-   public static final FoodProperties DRACONIC_APPLE = (new FoodProperties.Builder())
-           .nutrition(40)
-           .saturationModifier(10.0F)
-           .effect(new MobEffectInstance(MobEffects.REGENERATION, 600, 5), 1.0F)
-           .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 10000, 3), 1.0F)
-           .effect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 20000, 0), 1.0F)
-           .effect(new MobEffectInstance(MobEffects.ABSORPTION, 10000, 18), 1.0F)
-           .effect(new MobEffectInstance(MobEffects.HEALTH_BOOST, 6000, 9), 1.0F)
-           .alwaysEdible()
-           .build();
-
-
 }

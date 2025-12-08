@@ -1,6 +1,7 @@
 package de.nike.extramodules2.modules.data;
 
 import com.brandon3055.draconicevolution.api.modules.data.ModuleData;
+import net.neoforged.bus.api.Event;
 
 public class DefenseBrainData implements ModuleData<DefenseBrainData> {
 

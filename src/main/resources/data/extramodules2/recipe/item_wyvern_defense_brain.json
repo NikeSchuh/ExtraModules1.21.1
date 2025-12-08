@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#P#",
+    "ABA",
+    "#P#"
+  ],
+  "key": {
+    "#": {
+      "item": "draconicevolution:wyvern_core"
+    },
+    "B": {
+      "item": "extramodules2:advanced_module_core"
+    },
+    "A": {
+      "item": "extramodules2:elder_guardian_brain"
+    },
+    "P": {
+      "item": "extramodules2:elder_guardian_parts"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_wyvern_defense_brain",
+    "count": 1
+  }
+}

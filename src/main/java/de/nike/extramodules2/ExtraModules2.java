@@ -1,35 +1,38 @@
 package de.nike.extramodules2;
 
+import com.brandon3055.brandonscore.capability.CapabilityOP;
+import com.brandon3055.draconicevolution.api.DataComponentAccessor;
 import com.brandon3055.draconicevolution.api.DraconicAPI;
 import com.brandon3055.draconicevolution.api.capability.DECapabilities;
 import com.brandon3055.draconicevolution.api.capability.ModuleProvider;
-import com.brandon3055.draconicevolution.api.modules.Module;
-import com.brandon3055.draconicevolution.api.modules.items.ModuleItem;
+import com.brandon3055.draconicevolution.api.modules.lib.ModularOPStorage;
+import com.brandon3055.draconicevolution.api.modules.lib.ModuleHostImpl;
+import com.brandon3055.draconicevolution.integration.equipment.CurioWrapper;
+import com.brandon3055.draconicevolution.integration.equipment.EquipmentManager;
+import com.brandon3055.draconicevolution.integration.equipment.IDEEquipment;
+import com.brandon3055.draconicevolution.items.equipment.IModularEnergyItem;
+import com.brandon3055.draconicevolution.items.equipment.IModularItem;
 import de.nike.extramodules2.entities.EMEntities;
+import de.nike.extramodules2.entities.EMLootModifierCodecs;
 import de.nike.extramodules2.items.EMItemData;
 import de.nike.extramodules2.items.EMItems;
+import de.nike.extramodules2.items.custom.effectnecklace.NecklaceEffectRules;
+import de.nike.extramodules2.mobeffects.EMMobEffects;
+import de.nike.extramodules2.mobeffects.EMPotions;
 import de.nike.extramodules2.modules.EMModules;
 import de.nike.extramodules2.network.ModuleNetwork;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Creeper;
+import de.nike.extramodules2.sounds.EMSounds;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
 import net.neoforged.neoforge.registries.*;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -39,8 +42,8 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-
-import java.util.Optional;
+import top.theillusivec4.curios.api.CuriosCapability;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(ExtraModules2.MODID)
@@ -63,7 +66,12 @@ public class ExtraModules2 {
                 EMModules.ITEMS.getEntries().forEach(itemDeferredHolder -> {
                     output.accept(itemDeferredHolder.get());
                 }); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+
+                EMItems.ITEMS.getEntries().forEach(itemDeferredHolder -> {
+                    output.accept(itemDeferredHolder.get());
+                }); //
             }).build());
+
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
@@ -77,7 +85,12 @@ public class ExtraModules2 {
         EMModules.init(modEventBus);
         EMEntities.register(modEventBus);
         EMItems.init(modEventBus);
+        EMMobEffects.init(modEventBus);
+        EMSounds.init(modEventBus);
+        EMPotions.init(modEventBus);
         ModuleNetwork.init(modEventBus);
+        EMLootModifierCodecs.register(modEventBus);
+        NecklaceEffectRules.init();
 
 
 
@@ -98,13 +111,62 @@ public class ExtraModules2 {
 
     }
 
+    private static ModuleHostImpl getItemHostCap(ItemStack stack) {
+        Item host = stack.getItem();
+        if (host instanceof IModularItem item) {
+            ModuleHostImpl var3 = item.createHostCapForRegistration(stack);
+
+            assert var3 != null;
+
+            var3.updateDataAccess(DataComponentAccessor.itemStack(stack));
+            return var3;
+        } else {
+            throw new IllegalStateException("ITEM_HOST_DATA can only be used on an ItemStack who's item implements IModularItem!");
+        }
+    }
+
+    private static ModularOPStorage getEnergyCap(ItemStack stack) {
+        Item storage = stack.getItem();
+        if (storage instanceof IModularEnergyItem item) {
+            ModularOPStorage var3 = item.createOPCapForRegistration(stack);
+
+            assert var3 != null;
+
+            var3.updateDataAccess(DataComponentAccessor.itemStack(stack));
+            return var3;
+        } else {
+            throw new IllegalStateException("ITEM_HOST_DATA can only be used on an ItemStack who's item implements IModularEnergyItem!");
+        }
+    }
+
     private void registerCaps(RegisterCapabilitiesEvent event) {
         EMModules.ITEMS.getEntries().forEach((holder) -> {
             Item item = holder.get();
+
             if (item instanceof ModuleProvider<?> provider) {
                 event.registerItem(DECapabilities.Module.ITEM, (stack, context) -> provider, new ItemLike[]{item});
             }
 
+        });
+        EMItems.ITEMS.getEntries().forEach(holder -> {
+            Item item = holder.get();
+
+            if (item instanceof IModularItem modularItem) {
+                LOGGER.info("Registered modular item " + item);
+                event.registerItem(DECapabilities.Host.ITEM, (stack, v) -> getItemHostCap(stack), new ItemLike[]{item});
+                if (item instanceof IModularEnergyItem modularEnergyItem) {
+                    event.registerItem(CapabilityOP.ITEM, (stack, v) -> getEnergyCap(stack), new ItemLike[]{item});
+                    event.registerItem(Capabilities.EnergyStorage.ITEM, (stack, v) -> getEnergyCap(stack), new ItemLike[]{item});
+                }
+            }
+
+            if (item instanceof IDEEquipment) {
+                EquipmentManager.registerCapability(event, item);
+            }
+
+            if(item instanceof ICurioItem) {
+                event.registerItem(CuriosCapability.ITEM, (stack, context) -> new CurioWrapper(stack), new ItemLike[]{item});
+            }
         });
     }
 

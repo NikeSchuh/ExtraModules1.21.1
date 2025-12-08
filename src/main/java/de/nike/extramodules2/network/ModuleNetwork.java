@@ -3,6 +3,7 @@ package de.nike.extramodules2.network;
 import codechicken.lib.packet.PacketCustom;
 import codechicken.lib.packet.PacketCustomChannel;
 import de.nike.extramodules2.ExtraModules2;
+import de.nike.extramodules2.entities.projectiles.DraconicLightningChain;
 import de.nike.extramodules2.modules.entities.defensebrain.EyeMode;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,6 +30,20 @@ public class ModuleNetwork {
         PacketCustom packetCustom = new PacketCustom(CHANNEL, ModuleProtocol.S_DEFENSE_BRAIN_RAGE_PROGRESS_CHANGE, null);
         packetCustom.writeFloat(rageChargeProgress);
         packetCustom.sendToPlayer(target);
+    }
+
+    public static void sendLightningChain(DraconicLightningChain chain) {
+        PacketCustom packetCustom = new PacketCustom(CHANNEL, ModuleProtocol.S_ADD_CHAIN, null);
+
+        packetCustom.writeDouble(chain.position().x);
+        packetCustom.writeDouble(chain.position().y);
+        packetCustom.writeDouble(chain.position().z);
+
+        packetCustom.writeInt(chain.getStartEntity().getId());
+        packetCustom.writeInt(chain.getEndEntity().getId());
+        packetCustom.writeInt(chain.getLightningColor());
+
+        packetCustom.sendToAllAround(chain.blockPosition(), 64F, chain.level().dimension());
     }
 
 

@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "APA",
+    "#B#",
+    "APA"
+  ],
+  "key": {
+    "#": {
+      "item": "draconicevolution:draconium_core"
+    },
+    "B": {
+      "item": "draconicevolution:module_core"
+    },
+    "A": {
+      "item": "minecraft:cactus"
+    },
+    "P": {
+      "type": "neoforge:components",
+      "items": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:strong_harming"
+        }
+      }
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_wyvern_defense_module"
+  }
+}

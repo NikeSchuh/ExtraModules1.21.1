@@ -2,9 +2,13 @@ package de.nike.extramodules2.network;
 
 import codechicken.lib.packet.ICustomPacketHandler;
 import codechicken.lib.packet.PacketCustom;
+import de.nike.extramodules2.entities.EMEntities;
+import de.nike.extramodules2.entities.projectiles.DraconicLightningChain;
 import de.nike.extramodules2.modules.entities.defensebrain.EyeMode;
 import de.nike.extramodules2.utils.ModuleHostFinder;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.server.level.ServerLevel;
 
 public class ClientPacketHandler implements ICustomPacketHandler.IClientPacketHandler {
     @Override
@@ -28,6 +32,28 @@ public class ClientPacketHandler implements ICustomPacketHandler.IClientPacketHa
               //      brainEntity.clientChangeRageMode(rageMode);
                 });
             break;
+            case ModuleProtocol.S_ADD_CHAIN:
+                double x = packetCustom.readDouble();
+                double y = packetCustom.readDouble();
+                double z = packetCustom.readDouble();
+
+                int startEntityid = packetCustom.readInt();
+                int endEntityid = packetCustom.readInt();
+
+                int color = packetCustom.readInt();
+
+
+                ClientLevel level = minecraft.level;
+                DraconicLightningChain lightningChain = new DraconicLightningChain(EMEntities.DRACONIC_LIGHTNING_CHAIN.get(), level);
+
+                lightningChain.setPos(x, y, z);
+
+                lightningChain.setStartEntity(level.getEntity(startEntityid));
+                lightningChain.setEndEntity(level.getEntity(endEntityid));
+                lightningChain.setLightningColor(color);
+
+                level.addEntity(lightningChain);
+                break;
 
         }
     }

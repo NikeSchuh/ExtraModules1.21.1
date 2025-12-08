@@ -1,0 +1,11 @@
+{
+  "draconic_lightning_chain_zap": {
+    "category": "master",
+    "sounds": [
+      {
+        "name": "extramodules2:draconic_lightning_chain_zap",
+        "stream": false
+      }
+    ]
+  }
+}

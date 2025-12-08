@@ -77,7 +77,8 @@ public class OxygenEntity extends ModuleEntity {
     public void onInstalled(ModuleContext context) {
         super.onInstalled(context);
         if(EffectiveSide.get().isClient()) {
-            progress = 0;
+            OxygenStorageData storageData = (OxygenStorageData) module.getData();
+            progress = NikesMath.saveTotalPercentage(((float) oxygenStored) / storageData.getOxygenCapacity());
         }
     }
 
@@ -155,6 +156,7 @@ public class OxygenEntity extends ModuleEntity {
     @OnlyIn(Dist.CLIENT)
     public void renderModule(GuiElement parent, GuiRender render, int x, int y, int width, int height, double mouseX, double mouseY, boolean renderStack, float partialTicks) {
         super.renderModule(parent, render, x, y, width, height, mouseX, mouseY, renderStack, partialTicks);
+        if (renderStack) return;
         OxygenStorageData storageData =(OxygenStorageData) module.getData();
         double currentProgress = oxygenStored / Math.max(1D, storageData.getOxygenCapacity());
         progress = NikesMath.lerp(progress, currentProgress, 0.070f);

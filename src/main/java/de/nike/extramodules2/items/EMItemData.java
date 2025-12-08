@@ -14,6 +14,14 @@ public class EMItemData {
 
     public static final DeferredRegister<DataComponentType<?>> DATA = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, ExtraModules2.MODID);
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> EFFECT_NECKLACE_ACTIVE =
+            DATA.register("effect_necklace_active", () ->
+                    DataComponentType.<Boolean>builder()
+                            .persistent(Codec.BOOL)
+                            .networkSynchronized(ByteBufCodecs.BOOL)
+                            .build()
+            );
+
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> OXYGEN_STORAGE =
             DATA.register("oxygen_storage", () ->
                     DataComponentType.<Integer>builder()

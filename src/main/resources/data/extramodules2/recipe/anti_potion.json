@@ -1,0 +1,90 @@
+{
+  "type": "draconicevolution:fusion_crafting",
+  "catalyst": {
+    "item": "minecraft:glass_bottle"
+  },
+  "ingredients": [
+    {
+      "consume": true,
+      "ingredient": {
+        "type": "neoforge:components",
+        "items": "minecraft:potion",
+        "components": {
+          "minecraft:potion_contents": {
+            "potion": "minecraft:strong_slowness"
+          }
+        }
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "type": "neoforge:components",
+        "items": "minecraft:potion",
+        "components": {
+          "minecraft:potion_contents": {
+            "potion": "minecraft:strong_poison"
+          }
+        }
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "type": "neoforge:components",
+        "items": "minecraft:potion",
+        "components": {
+          "minecraft:potion_contents": {
+            "potion": "minecraft:weakness"
+          }
+        }
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "type": "neoforge:components",
+        "items": "minecraft:potion",
+        "components": {
+          "minecraft:potion_contents": {
+            "potion": "extramodules2:strong_wither"
+          }
+        }
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "type": "neoforge:components",
+        "items": "minecraft:potion",
+        "components": {
+          "minecraft:potion_contents": {
+            "potion": "extramodules2:bad_omen"
+          }
+        }
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": { "item": "minecraft:warped_fungus" }
+    },
+    {
+      "consume": true,
+      "ingredient": { "item": "minecraft:crimson_fungus" }
+    },
+    {
+      "consume": true,
+      "ingredient": { "item": "minecraft:shulker_shell" }
+    },
+    {
+      "consume": true,
+      "ingredient": { "item": "minecraft:milk_bucket" }
+    }
+  ],
+  "result": {
+    "id": "extramodules2:anti_potion",
+    "count": 1
+  },
+  "techLevel": "wyvern",
+  "totalEnergy": 10000000
+}

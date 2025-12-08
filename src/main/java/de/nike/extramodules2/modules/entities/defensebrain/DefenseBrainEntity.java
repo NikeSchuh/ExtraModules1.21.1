@@ -3,6 +3,7 @@ package de.nike.extramodules2.modules.entities.defensebrain;
 import codechicken.lib.gui.modular.elements.GuiElement;
 import codechicken.lib.gui.modular.lib.GuiRender;
 import com.brandon3055.brandonscore.api.BCStreamCodec;
+import com.brandon3055.brandonscore.api.TechLevel;
 import com.brandon3055.brandonscore.api.power.IOPStorage;
 import com.brandon3055.draconicevolution.api.config.BooleanProperty;
 import com.brandon3055.draconicevolution.api.config.ConfigProperty;
@@ -15,14 +16,16 @@ import com.brandon3055.draconicevolution.init.DEModules;
 import com.brandon3055.draconicevolution.init.ItemData;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import de.nike.extramodules2.entities.EMDamageTypes;
 import de.nike.extramodules2.entities.EMEntities;
 import de.nike.extramodules2.entities.projectiles.DraconicLightningChain;
 import de.nike.extramodules2.items.EMItemData;
+import de.nike.extramodules2.modules.EMModuleTypes;
 import de.nike.extramodules2.modules.data.DefenseBrainData;
-import de.nike.extramodules2.utils.FormatUtils;
-import de.nike.extramodules2.utils.NikesMath;
-import de.nike.extramodules2.utils.NikesRendering;
-import de.nike.extramodules2.utils.TranslationUtils;
+import de.nike.extramodules2.modules.data.DefenseData;
+import de.nike.extramodules2.network.ModuleNetwork;
+import de.nike.extramodules2.sounds.EMSounds;
+import de.nike.extramodules2.utils.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -33,8 +36,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.api.distmarker.Dist;
@@ -44,10 +53,8 @@ import org.joml.Vector2f;
 
 import javax.annotation.Nullable;
 import java.awt.*;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 public class DefenseBrainEntity extends ModuleEntity {
 
@@ -159,7 +166,7 @@ public class DefenseBrainEntity extends ModuleEntity {
                         if (energyStorage.getOPStored() < opCost) {
                             rageTicks = 0;
                         } else energyStorage.modifyEnergyStored(-opCost);
-                        rageTick(serverPlayer, brainData);
+                        rageTick(serverPlayer, brainData, moduleContext);
                         rageTicks--;
                     }
 
@@ -193,33 +200,78 @@ public class DefenseBrainEntity extends ModuleEntity {
         }
     }
 
-    public void rageTick(ServerPlayer playerEntity, DefenseBrainData data) {
+    public void chainLightning(ServerPlayer damager, LivingEntity origin, ServerLevel serverLevel, final float range, float damage, int remainingStrikes, List<LivingEntity> blackList) {
+        remainingStrikes--;
+        if(remainingStrikes == 0) return;
+
+        blackList.add(origin);
+
+        AABB axisAlignedBB = new AABB(origin.position().add(range, range / 2, range), origin.position().subtract(range, range / 2, range));
+
+        List<LivingEntity> livingEntities = serverLevel.getEntitiesOfClass(LivingEntity.class, axisAlignedBB);
+        livingEntities.sort(Comparator.comparing(l -> l.blockPosition().distSqr(origin.blockPosition())));
+
+        livingEntities.removeAll(blackList);
+
+        if(livingEntities.isEmpty()) return;
+
+        for(LivingEntity scannedEntity : livingEntities) {
+            if (scannedEntity.invulnerableTime > 0
+                    || scannedEntity instanceof Villager
+                    || scannedEntity.isInvulnerable()
+                    || scannedEntity.isDeadOrDying()
+                    || !scannedEntity.isAlive()
+                    || !scannedEntity.isAttackable()
+                    || !damager.canAttack(scannedEntity)) {
+                blackList.add(scannedEntity);
+                continue;
+            }
+
+            LivingEntity target = livingEntities.getFirst();
+
+            DraconicLightningChain chain = new DraconicLightningChain(EMEntities.DRACONIC_LIGHTNING_CHAIN.get(), serverLevel);
+
+            chain.setPos(origin.position().x, origin.position().y, origin.position().z);
+            chain.setStartEntity(origin);
+            chain.setEndEntity(target);
+            chain.setLightningColor(getDefaultLightningColor(module.getModuleTechLevel()));
+
+            ModuleNetwork.sendLightningChain(chain);
+
+            serverLevel.playSound(null, target.blockPosition(), EMSounds.DRACONIC_LIGHTNING_CHAIN_ZAP.get(), SoundSource.HOSTILE, 0.5F, (float) (0.5f + Math.random()));
+            target.hurt(EMDamageTypes.playerDraconicLightning(serverLevel, damager, target), damage);
+            chainLightning(damager, target, serverLevel, range, damage, remainingStrikes, blackList);
+        }
+
+
+    }
+
+    public void rageTick(ServerPlayer playerEntity, DefenseBrainData data, StackModuleContext moduleContext) {
         if(playerEntity.tickCount % 20 == 0) {
             ServerLevel serverLevel = playerEntity.serverLevel();
             float range = data.getLightningJumpRange();
             AABB axisAlignedBB = new AABB(playerEntity.position().add(range, range / 2, range), playerEntity.position().subtract(range, range / 2, range));
+
             List<LivingEntity> livingEntities = serverLevel.getEntitiesOfClass(LivingEntity.class, axisAlignedBB);
             livingEntities.sort(Comparator.comparing(l -> l.blockPosition().distSqr(playerEntity.blockPosition())));
 
-            for (LivingEntity livingEntity : livingEntities) {
-                if (livingEntity.equals(playerEntity)) continue;
-                if (livingEntity.invulnerableTime > 0) continue;
-                if (livingEntity.isInvulnerable()) continue;
-                if (livingEntity.isDeadOrDying()) continue;
-                if (!livingEntity.isAlive()) continue;
-                if (livingEntity.isDeadOrDying()) continue;
-                if (!livingEntity.isAttackable()) continue;
-                if (!playerEntity.canAttack(livingEntity)) continue;
+            float damage = ModuleHostFinder.unsafeGet(moduleContext.getStack()).getModuleData(EMModuleTypes.DEFENSE_MODULE, new DefenseData(1.0F)).getDamage();
 
-
-                DraconicLightningChain chain = new DraconicLightningChain(EMEntities.DRACONIC_LIGHTNING_CHAIN.get(), serverLevel);
-                chain.setStartEntity(playerEntity);
-                chain.setEndEntity(livingEntity);
-                serverLevel.addFreshEntity(chain);
-
-            }
-
+            chainLightning(playerEntity, playerEntity, serverLevel, range, damage, data.getMaximumJumpTargets(), new ArrayList<>());
         }
+    }
+
+    private static int getDefaultLightningColor(TechLevel techLevel) {
+        int var10000;
+        switch (techLevel) {
+            case DRACONIUM -> var10000 = 32972;
+            case WYVERN -> var10000 = 9175205;
+            case DRACONIC -> var10000 = 16748544;
+            case CHAOTIC -> var10000 = 12520460;
+            default -> throw new MatchException((String)null, (Throwable)null);
+        }
+
+        return var10000;
     }
 
     public boolean isInRageMode() {
@@ -267,8 +319,7 @@ public class DefenseBrainEntity extends ModuleEntity {
 
     public void incomingDamage(ServerPlayer damagedPlayer, double damageAmount, @Nullable ShieldControlEntity shieldControl) {
         if (!defendPlayer.getValue()) return;
-
-        float rageTolerance = shieldControl == null ? (damagedPlayer.getMaxHealth() / 2F) : (float) Math.min(Math.max(30, shieldControl.getShieldPoints() / 2F), 100);
+        float rageTolerance = shieldControl == null ? (damagedPlayer.getHealth()) : (float) Math.min(Math.max(10, (shieldControl.getShieldPoints() + 1.0F) / 2F), 100);
         float rageIncrease = (float) (damageAmount / rageTolerance);
 
         rageIncreaseMap.put(damagedPlayer, rageIncreaseMap.getOrDefault(damagedPlayer, 0.0F) + rageIncrease);
@@ -318,9 +369,11 @@ public class DefenseBrainEntity extends ModuleEntity {
         super.addToolTip(list);
         DefenseBrainData brainData = (DefenseBrainData) module.getData();
         list.add(TranslationUtils.string(ChatFormatting.GRAY + TranslationUtils.getTranslation("module.extramodules2.defense_brain.rage") + ": " + ChatFormatting.GREEN + String.format("%.0f", rageProgress * 100F) + "%"));
-        list.add(TranslationUtils.string(ChatFormatting.GRAY + TranslationUtils.getTranslation("module.extramodules2.defense_brain.rage_duration") + ": " + ChatFormatting.GREEN + String.format("%.2f", brainData.getRageTicks() / 20F) + "s"));
         list.add(TranslationUtils.string(ChatFormatting.GRAY + TranslationUtils.getTranslation("module.extramodules2.defense_brain.tick_cost") + ": " + ChatFormatting.GREEN + FormatUtils.formatE(brainData.getOpTickCost()) + " OP/t"));
-
+        list.add(TranslationUtils.string(ChatFormatting.GRAY + TranslationUtils.getTranslation("module.extramodules2.defense_brain.spread_range")+ ": " + ChatFormatting.GREEN + brainData.getLightningJumpRange() + " blocks"));
+        list.add(TranslationUtils.string(ChatFormatting.GRAY + TranslationUtils.getTranslation("module.extramodules2.defense_brain.max_spreads")+ ": " + ChatFormatting.GREEN + brainData.getMaximumJumpTargets() + " mobs"));
+        if(isInRageMode()) list.add(TranslationUtils.string(ChatFormatting.GRAY + TranslationUtils.getTranslation("module.extramodules2.defense_brain.rage_duration") + ": " + ChatFormatting.GREEN + String.format("%.2f", rageTicks / 20F) + "s"));
+        else list.add(TranslationUtils.string(ChatFormatting.GRAY + TranslationUtils.getTranslation("module.extramodules2.defense_brain.rage_duration") + ": " + ChatFormatting.GREEN + String.format("%.2f", brainData.getRageTicks() / 20F) + "s"));
     }
 
     @Override

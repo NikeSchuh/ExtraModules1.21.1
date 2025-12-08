@@ -1,0 +1,44 @@
+{
+  "type": "draconicevolution:fusion_crafting",
+  "catalyst": {
+    "item": "extramodules2:advanced_module_core"
+  },
+  "ingredients": [
+    {
+      "consume": true,
+      "ingredient": { "tag": "c:gems/diamond" }
+    },
+    {
+      "consume": true,
+      "ingredient": { "tag": "c:gems/diamond" }
+    },
+    {
+      "consume": true,
+      "ingredient": { "item": "draconicevolution:draconic_energy_core" }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "extramodules2:module_controller"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "extramodules2:module_controller"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:awakened_core"
+      }
+    }
+  ],
+  "result": {
+    "id": "extramodules2:superior_module_core",
+    "count": 1
+  },
+  "techLevel": "wyvern",
+  "totalEnergy": 10000000
+}

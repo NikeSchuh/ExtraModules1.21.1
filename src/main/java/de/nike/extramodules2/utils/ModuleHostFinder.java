@@ -23,4 +23,8 @@ public class ModuleHostFinder {
         return Optional.ofNullable(brainEntity);
     }
 
+    public static ModuleHost unsafeGet(ItemStack stack) {
+        return DECapabilities.getHost(stack);
+    }
+
 }

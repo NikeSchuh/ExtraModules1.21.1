@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector3d;
@@ -28,26 +29,29 @@ public class DraconicLightningChainRenderer extends EntityRenderer<DraconicLight
     @Override
     public void render(DraconicLightningChain lightningChain, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         super.render(lightningChain, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-        int segCount = 12;
         long randSeed = lightningChain.getLightningSeed();
 
         Entity startEntity = lightningChain.getStartEntity();
         Entity endEntity = lightningChain.getEndEntity();
 
+        if(startEntity == null) return;
+        if(endEntity == null) return;
+
         poseStack.pushPose();
         poseStack.translate(
-                -startEntity.position().x,
-                -startEntity.position().y,
-                -startEntity.position().z
+                -lightningChain.position().x,
+                -lightningChain.position().y,
+                -lightningChain.position().z
         );
 
+        int segCount = Math.max(6, Math.min(30, ((int) startEntity.blockPosition().distSqr(endEntity.blockPosition()))));
         float scaleMod = 2f;
         float deflectMod = 1f;
-        boolean autoScale = true;
+        boolean autoScale = false;
         float segTaper = 0.125F;
-        int colour = Color.magenta.getRGB();
+        int colour = lightningChain.getLightningColor();
         poseStack.pushPose();
-        rendeArcP2P(poseStack, bufferSource, startEntity.position() ,endEntity.position() ,segCount ,randSeed ,scaleMod ,deflectMod ,autoScale ,segTaper ,colour);
+        rendeArcP2P(poseStack, bufferSource, startEntity instanceof Player ? startEntity.getEyePosition().add(0, 0.5, 0) : startEntity.position().add(0, endEntity.getEyeHeight() / 2F, 0) ,endEntity.position().add(0, endEntity.getEyeHeight() / 2F, 0) ,segCount ,randSeed ,scaleMod ,deflectMod ,autoScale ,segTaper ,colour);
         poseStack.popPose();
         poseStack.popPose();
     }
@@ -60,7 +64,13 @@ public class DraconicLightningChainRenderer extends EntityRenderer<DraconicLight
     public static void rendeArcP2P(PoseStack mStack, MultiBufferSource getter, Vec3 startPos, Vec3 endPos, int segCount, long randSeed, float scaleMod, float deflectMod, boolean autoScale, float segTaper, int colour) {
 
         double height = endPos.y - startPos.y;
-        float relScale = autoScale ? (float) height / 128F : 1F; //A scale value calculated by comparing the bolt height to that of vanilla lightning
+
+        double minHeight = 1.25;
+        if (Math.abs(height) < 0.25) {
+            height = Math.copySign(minHeight, height == 0 ? 1 : height);
+        }
+
+        float relScale = autoScale ? (float) height / 128F : 0.05F; //A scale value calculated by comparing the bolt height to that of vanilla lightning
         float segHeight = (float) height / segCount;
         float[] segXOffset = new float[segCount + 1];
         float[] segZOffset = new float[segCount + 1];

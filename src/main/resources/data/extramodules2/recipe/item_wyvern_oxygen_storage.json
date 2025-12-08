@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#P#",
+    "ABA",
+    "#P#"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:ingots/draconium"
+    },
+    "B": {
+      "item": "draconicevolution:module_core"
+    },
+    "A": {
+      "item": "draconicevolution:draconium_core"
+    },
+    "P": {
+      "type": "neoforge:components",
+      "items": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:long_water_breathing"
+        }
+      }
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_wyvern_oxygen_storage",
+    "count": 1
+  }
+}
