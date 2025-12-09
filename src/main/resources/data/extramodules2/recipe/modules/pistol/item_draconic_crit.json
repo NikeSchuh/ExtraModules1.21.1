@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S#",
+    "DKD",
+    "#R#"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:ingots/draconium_awakened"
+    },
+    "K": {
+      "item": "extramodules2:advanced_module_core"
+    },
+    "R": {
+      "item": "draconicevolution:awakened_core"
+    },
+    "D": {
+      "item": "extramodules2:item_wyvern_crit"
+    },
+    "S": {
+      "item": "minecraft:ghast_tear"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_draconic_crit",
+    "count": 1
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#R#",
+    "DKD",
+    "#R#"
+  ],
+  "key": {
+    "#": {
+      "item": "draconicevolution:chaotic_core"
+    },
+    "K": {
+      "item": "extramodules2:superior_module_core"
+    },
+    "R": {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    "D": {
+      "item": "extramodules2:item_draconic_absorption"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_chaotic_absorption",
+    "count": 1
+  }
+}

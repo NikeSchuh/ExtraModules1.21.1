@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#D#",
+    "RKR",
+    "#D#"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:ingots/draconium_awakened"
+    },
+    "K": {
+      "item": "extramodules2:superior_module_core"
+    },
+    "D": {
+      "type": "neoforge:components",
+      "items": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:strong_turtle_master"
+        }
+      }
+    },
+    "R": {
+      "item": "draconicevolution:awakened_core"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_draconic_resistance",
+    "count": 1
+  }
+}

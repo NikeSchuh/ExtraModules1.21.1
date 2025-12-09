@@ -7,8 +7,6 @@ import com.brandon3055.draconicevolution.api.capability.DECapabilities;
 import com.brandon3055.draconicevolution.api.capability.ModuleProvider;
 import com.brandon3055.draconicevolution.api.modules.lib.ModularOPStorage;
 import com.brandon3055.draconicevolution.api.modules.lib.ModuleHostImpl;
-import com.brandon3055.draconicevolution.integration.equipment.CurioWrapper;
-import com.brandon3055.draconicevolution.integration.equipment.EquipmentManager;
 import com.brandon3055.draconicevolution.integration.equipment.IDEEquipment;
 import com.brandon3055.draconicevolution.items.equipment.IModularEnergyItem;
 import com.brandon3055.draconicevolution.items.equipment.IModularItem;
@@ -21,7 +19,7 @@ import de.nike.extramodules2.mobeffects.EMMobEffects;
 import de.nike.extramodules2.mobeffects.EMPotions;
 import de.nike.extramodules2.modules.EMModules;
 import de.nike.extramodules2.network.ModuleNetwork;
-import de.nike.extramodules2.sounds.EMSounds;
+import de.nike.extramodules2.client.sounds.EMSounds;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -42,7 +40,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import top.theillusivec4.curios.api.CuriosCapability;
+import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -93,8 +91,6 @@ public class ExtraModules2 {
         NecklaceEffectRules.init();
 
 
-
-
         CREATIVE_MODE_TABS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
@@ -105,6 +101,7 @@ public class ExtraModules2 {
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
         modEventBus.addListener(this::registerCaps);
+        NeoForge.EVENT_BUS.addListener(EMPotions::registerBrewingRecipes);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -148,11 +145,11 @@ public class ExtraModules2 {
             }
 
         });
+
         EMItems.ITEMS.getEntries().forEach(holder -> {
             Item item = holder.get();
 
             if (item instanceof IModularItem modularItem) {
-                LOGGER.info("Registered modular item " + item);
                 event.registerItem(DECapabilities.Host.ITEM, (stack, v) -> getItemHostCap(stack), new ItemLike[]{item});
                 if (item instanceof IModularEnergyItem modularEnergyItem) {
                     event.registerItem(CapabilityOP.ITEM, (stack, v) -> getEnergyCap(stack), new ItemLike[]{item});
@@ -161,16 +158,19 @@ public class ExtraModules2 {
             }
 
             if (item instanceof IDEEquipment) {
-                EquipmentManager.registerCapability(event, item);
+            //   EquipmentManager.registerCapability(event, item);
             }
 
-            if(item instanceof ICurioItem) {
-                event.registerItem(CuriosCapability.ITEM, (stack, context) -> new CurioWrapper(stack), new ItemLike[]{item});
+
+            if(item instanceof ICurioItem curioItem) {
+                CuriosApi.registerCurio(item, curioItem);
             }
+
         });
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
+
 
     }
 

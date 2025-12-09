@@ -4,6 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexBuffer;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import de.nike.extramodules2.entities.projectiles.DraconicLightningChain;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -28,6 +30,7 @@ public class DraconicLightningChainRenderer extends EntityRenderer<DraconicLight
 
     @Override
     public void render(DraconicLightningChain lightningChain, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+
         super.render(lightningChain, entityYaw, partialTick, poseStack, bufferSource, packedLight);
         long randSeed = lightningChain.getLightningSeed();
 

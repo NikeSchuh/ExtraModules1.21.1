@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "DKD",
+    "#R#"
+  ],
+  "key": {
+    "#": {
+      "item": "draconicevolution:medium_chaos_frag"
+    },
+    "K": {
+      "item": "extramodules2:superior_module_core"
+    },
+    "R": {
+      "item": "draconicevolution:chaotic_core"
+    },
+    "D": {
+      "item": "extramodules2:item_draconic_crit_dmg"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_chaotic_crit_dmg",
+    "count": 1
+  }
+}

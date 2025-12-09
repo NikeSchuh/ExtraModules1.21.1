@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin({AutoFeedEntity.class})
 public class ShieldControlEntityMixin {
 
-
     // Match the constructor signature EXACTLY
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onConstruct(CallbackInfo ci) {

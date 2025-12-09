@@ -24,7 +24,7 @@ import de.nike.extramodules2.modules.EMModuleTypes;
 import de.nike.extramodules2.modules.data.DefenseBrainData;
 import de.nike.extramodules2.modules.data.DefenseData;
 import de.nike.extramodules2.network.ModuleNetwork;
-import de.nike.extramodules2.sounds.EMSounds;
+import de.nike.extramodules2.client.sounds.EMSounds;
 import de.nike.extramodules2.utils.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -36,13 +36,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageSources;
-import net.minecraft.world.entity.AreaEffectCloud;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
@@ -206,7 +200,7 @@ public class DefenseBrainEntity extends ModuleEntity {
 
         blackList.add(origin);
 
-        AABB axisAlignedBB = new AABB(origin.position().add(range, range / 2, range), origin.position().subtract(range, range / 2, range));
+        AABB axisAlignedBB = new AABB(origin.position().add(range, range, range), origin.position().subtract(range, range, range));
 
         List<LivingEntity> livingEntities = serverLevel.getEntitiesOfClass(LivingEntity.class, axisAlignedBB);
         livingEntities.sort(Comparator.comparing(l -> l.blockPosition().distSqr(origin.blockPosition())));

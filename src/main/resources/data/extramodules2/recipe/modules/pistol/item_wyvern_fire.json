@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S#",
+    "DKD",
+    "#R#"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:ingots/draconium"
+    },
+    "K": {
+      "item": "draconicevolution:module_core"
+    },
+    "R": {
+      "item": "draconicevolution:wyvern_core"
+    },
+    "D": {
+      "item": "draconicevolution:item_wyvern_proj_damage"
+    },
+    "S": {
+      "item": "minecraft:blaze_powder"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_wyvern_fire",
+    "count": 1
+  }
+}

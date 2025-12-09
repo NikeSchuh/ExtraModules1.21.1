@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S#",
+    "DKD",
+    "#R#"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:ingots/draconium"
+    },
+    "K": {
+      "item": "draconicevolution:module_core"
+    },
+    "R": {
+      "item": "minecraft:netherite_sword"
+    },
+    "D": {
+      "item": "draconicevolution:item_wyvern_proj_damage"
+    },
+    "S": {
+      "item": "extramodules2:item_wyvern_strength"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_wyvern_crit_dmg",
+    "count": 1
+  }
+}

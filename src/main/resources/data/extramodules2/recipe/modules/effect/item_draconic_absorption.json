@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#R#",
+    "DKD",
+    "#R#"
+  ],
+  "key": {
+    "#": {
+      "item": "draconicevolution:awakened_core"
+    },
+    "K": {
+      "item": "extramodules2:superior_module_core"
+    },
+    "R": {
+      "item": "minecraft:golden_apple"
+    },
+    "D": {
+      "item": "minecraft:nautilus_shell"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_draconic_absorption",
+    "count": 1
+  }
+}

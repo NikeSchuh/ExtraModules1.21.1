@@ -56,9 +56,9 @@ public class EffectData implements ModuleData<EffectData> {
             if(NecklaceEffectRules.hasCap(effect)) amp = Math.min(amp, NecklaceEffectRules.getCap(effect));
             map.put(TranslationUtils.string(FormatUtils.capitalizeString(effect.value().getDisplayName().getString())), TranslationUtils.string(FormatUtils.toRoman(amp + 1)));
         }
-        if(stack) {
+        if(context != null && context.getType() == ModuleContext.Type.LIMITED) {
             ampMap.keySet().stream().findFirst().ifPresent(localEffect -> {
-                if(NecklaceEffectRules.hasCap(localEffect))
+                if (NecklaceEffectRules.hasCap(localEffect))
                     map.put(Component.translatable("module.extramodules2.effect.levelcap"), TranslationUtils.string(FormatUtils.toRoman(NecklaceEffectRules.getCap(localEffect) + 1)));
             });
         }

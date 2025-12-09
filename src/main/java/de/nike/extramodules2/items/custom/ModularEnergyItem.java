@@ -32,7 +32,7 @@ public class ModularEnergyItem extends Item implements IModularEnergyItem, IDEEq
 
     @Override
     public TechLevel getTechLevel() {
-        return null;
+        return tier;
     }
 
     @Override

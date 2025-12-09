@@ -7,5 +7,23 @@
         "stream": false
       }
     ]
+  },
+  "modular_pistol_shoot": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "extramodules2:modular_pistol_shoot",
+        "stream": false
+      }
+    ]
+  },
+  "distant_thunder": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "extramodules2:distant_thunder",
+        "stream": false
+      }
+    ]
   }
 }

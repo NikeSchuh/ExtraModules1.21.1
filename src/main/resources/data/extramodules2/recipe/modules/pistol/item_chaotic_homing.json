@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "ABA",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "draconicevolution:medium_chaos_frag"
+    },
+    "B": {
+      "item": "extramodules2:item_draconic_homing"
+    },
+    "A": {
+      "item": "draconicevolution:chaotic_core"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_chaotic_homing",
+    "count": 1
+  }
+}

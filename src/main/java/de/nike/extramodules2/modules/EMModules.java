@@ -40,6 +40,7 @@ public class EMModules {
     public static DeferredHolder<Module<?>, Module<?>> draconicDefenseModule;
     public static DeferredHolder<Module<?>, Module<?>> chaoticDefenseModule;
 
+
     // Effect Modules
     public static DeferredHolder<Module<?>, Module<?>> wyvernRegeneration;
     public static DeferredHolder<Module<?>, Module<?>> draconicRegeneration;
@@ -62,6 +63,25 @@ public class EMModules {
 
     public static DeferredHolder<Module<?>, Module<?>> wyvernHaste;
     public static DeferredHolder<Module<?>, Module<?>> draconicHaste;
+
+    // MODULES
+
+    public static DeferredHolder<Module<?>, Module<?>> wyvernCrit;
+    public static DeferredHolder<Module<?>, Module<?>> draconicCrit;
+    public static DeferredHolder<Module<?>, Module<?>> chaoticCrit;
+
+    public static DeferredHolder<Module<?>, Module<?>> wyvernCritDmg;
+    public static DeferredHolder<Module<?>, Module<?>> draconicCritDmg;
+    public static DeferredHolder<Module<?>, Module<?>> chaoticCritDmg;
+
+    public static DeferredHolder<Module<?>, Module<?>> wyvernFire;
+    public static DeferredHolder<Module<?>, Module<?>> draconicFire;
+    public static DeferredHolder<Module<?>, Module<?>> chaoticFire;
+
+    public static DeferredHolder<Module<?>, Module<?>> draconicHoming;
+    public static DeferredHolder<Module<?>, Module<?>> chaoticHoming;
+
+    // ITEMS
 
     public static DeferredHolder<Item, ModuleItem<?>> ITEM_DRACONIC_POTION_CURER;
 
@@ -99,7 +119,37 @@ public class EMModules {
     public static DeferredHolder<Item, ModuleItem<?>> ITEM_WYVERN_HASTE;
     public static DeferredHolder<Item, ModuleItem<?>> ITEM_DRACONIC_HASTE;
 
+    public static DeferredHolder<Item, ModuleItem<?>> ITEM_WYVERN_CRIT;
+    public static DeferredHolder<Item, ModuleItem<?>> ITEM_DRACONIC_CRIT;
+    public static DeferredHolder<Item, ModuleItem<?>> ITEM_CHAOTIC_CRIT;
 
+    public static DeferredHolder<Item, ModuleItem<?>> ITEM_WYVERN_CRIT_DMG;
+    public static DeferredHolder<Item, ModuleItem<?>> ITEM_DRACONIC_CRIT_DMG;
+    public static DeferredHolder<Item, ModuleItem<?>> ITEM_CHAOTIC_CRIT_DMG;
+
+    public static DeferredHolder<Item, ModuleItem<?>> ITEM_WYVERN_FIRE;
+    public static DeferredHolder<Item, ModuleItem<?>> ITEM_DRACONIC_FIRE;
+    public static DeferredHolder<Item, ModuleItem<?>> ITEM_CHAOTIC_FIRE;
+
+    public static DeferredHolder<Item, ModuleItem<?>> ITEM_DRACONIC_HOMING;
+    public static DeferredHolder<Item, ModuleItem<?>> ITEM_CHAOTIC_HOMING;
+
+
+
+    private static Function<Module<PistolData>, PistolData> pistolData(float critChance, float criticalDamage, float extraBaseDamage, int fireTicks)
+    {
+        return e ->{
+            return new PistolData(critChance, criticalDamage, extraBaseDamage, fireTicks);
+        };
+    }
+
+
+    private static Function<Module<PistolHomingData>, PistolHomingData> pistolHomingData()
+    {
+        return e ->{
+            return new PistolHomingData();
+        };
+    }
 
     private static Function<Module<OxygenStorageData>, OxygenStorageData> oxygenStorageData(int oxygenCapacity, int oxygenRefillRate) {
         return e -> {
@@ -167,7 +217,7 @@ public class EMModules {
 
         chaoticRegeneration = MODULES.register("chaotic_regeneration",
                 () -> new ModuleImpl<>(EMModuleTypes.EFFECT, TechLevel.CHAOTIC,
-                        effectData(MobEffects.REGENERATION, 3, 1000)));
+                        effectData(MobEffects.REGENERATION, 2, 1000)));
 
         draconicResistance = MODULES.register("draconic_resistance",
                 () -> new ModuleImpl<>(EMModuleTypes.EFFECT, TechLevel.DRACONIC,
@@ -195,15 +245,15 @@ public class EMModules {
 
         wyvernStrength = MODULES.register("wyvern_strength",
                 () -> new ModuleImpl<>(EMModuleTypes.EFFECT, TechLevel.WYVERN,
-                        effectData(MobEffects.DAMAGE_BOOST, 0, 300), 1, 1));
+                        effectData(MobEffects.DAMAGE_BOOST, 0, 1000), 1, 1));
 
         draconicStrength = MODULES.register("draconic_strength",
                 () -> new ModuleImpl<>(EMModuleTypes.EFFECT, TechLevel.DRACONIC,
-                        effectData(MobEffects.DAMAGE_BOOST, 2, 1000), 1, 2));
+                        effectData(MobEffects.DAMAGE_BOOST, 2, 2000), 1, 2));
 
         chaoticStrength = MODULES.register("chaotic_strength",
                 () -> new ModuleImpl<>(EMModuleTypes.EFFECT, TechLevel.CHAOTIC,
-                        effectData(MobEffects.DAMAGE_BOOST, 3, 2000), 1, 2));
+                        effectData(MobEffects.DAMAGE_BOOST, 3, 3000), 1, 2));
 
         draconicInvisibility = MODULES.register("draconic_invisibility",
                 () -> new ModuleImpl<>(EMModuleTypes.EFFECT, TechLevel.DRACONIC,
@@ -216,6 +266,53 @@ public class EMModules {
         draconicHaste = MODULES.register("draconic_haste",
                 () -> new ModuleImpl<>(EMModuleTypes.EFFECT, TechLevel.DRACONIC,
                         effectData(MobEffects.DIG_SPEED, 1, 1200), 1, 1));
+
+        wyvernCrit = MODULES.register("wyvern_crit",
+                () -> new ModuleImpl<>(EMModuleTypes.PISTOL, TechLevel.WYVERN,
+                        pistolData(0.05f, 0.0f, 0.0f, 0), 2, 1));
+
+        draconicCrit = MODULES.register("draconic_crit",
+                () -> new ModuleImpl<>(EMModuleTypes.PISTOL, TechLevel.DRACONIC,
+                        pistolData(0.1f, 0.0f, 0.0f, 0), 2, 1));
+
+        chaoticCrit = MODULES.register("chaotic_crit",
+                () -> new ModuleImpl<>(EMModuleTypes.PISTOL, TechLevel.CHAOTIC,
+                        pistolData(0.2f, 0.0f, 0.0f, 0), 2, 1));
+
+
+        wyvernCritDmg = MODULES.register("wyvern_crit_dmg",
+                () -> new ModuleImpl<>(EMModuleTypes.PISTOL, TechLevel.WYVERN,
+                        pistolData(0.0f, 0.1f, 0.5f, 0), 1, 1));
+
+        draconicCritDmg = MODULES.register("draconic_crit_dmg",
+                () -> new ModuleImpl<>(EMModuleTypes.PISTOL, TechLevel.DRACONIC,
+                        pistolData(0.0f, 0.25f, 1.0f, 0), 1, 1));
+
+        chaoticCritDmg = MODULES.register("chaotic_crit_dmg",
+                () -> new ModuleImpl<>(EMModuleTypes.PISTOL, TechLevel.CHAOTIC,
+                        pistolData(0.0f, 0.50f, 2.0f, 0), 1, 1));
+
+
+        wyvernFire = MODULES.register("wyvern_fire",
+                () -> new ModuleImpl<>(EMModuleTypes.PISTOL, TechLevel.WYVERN,
+                        pistolData(0.0f, 0, 0.75f, 50), 1, 1));
+
+        draconicFire = MODULES.register("draconic_fire",
+                () -> new ModuleImpl<>(EMModuleTypes.PISTOL, TechLevel.DRACONIC,
+                        pistolData(0.0f, 0, 1.25f, 100), 1, 1));
+
+        chaoticFire = MODULES.register("chaotic_fire",
+                () -> new ModuleImpl<>(EMModuleTypes.PISTOL, TechLevel.CHAOTIC,
+                        pistolData(0.0f, 0, 2.25f, 200), 1, 1));
+
+
+        draconicHoming = MODULES.register("draconic_homing",
+                () -> new ModuleImpl<>(EMModuleTypes.PISTOL_HOMING, TechLevel.DRACONIC,
+                        pistolHomingData(), 3, 3));
+
+        chaoticHoming = MODULES.register("chaotic_homing",
+                () -> new ModuleImpl<>(EMModuleTypes.PISTOL_HOMING, TechLevel.CHAOTIC,
+                        pistolHomingData(), 2, 2));
 
         ITEM_DRACONIC_POTION_CURER = ITEMS.register("item_draconic_potion_curer", () -> new ModuleItem<PotionCurerData>(draconicPotionCurer));
 
@@ -275,6 +372,44 @@ public class EMModules {
 
         ITEM_DRACONIC_HASTE = ITEMS.register("item_draconic_haste",
                 () -> new ModuleItem<EffectData>(draconicHaste));
+
+        ITEM_WYVERN_CRIT = ITEMS.register("item_wyvern_crit",
+                () -> new ModuleItem<>(wyvernCrit));
+
+        ITEM_DRACONIC_CRIT = ITEMS.register("item_draconic_crit",
+                () -> new ModuleItem<>(draconicCrit));
+
+        ITEM_CHAOTIC_CRIT = ITEMS.register("item_chaotic_crit",
+                () -> new ModuleItem<>(chaoticCrit));
+
+
+        ITEM_WYVERN_CRIT_DMG = ITEMS.register("item_wyvern_crit_dmg",
+                () -> new ModuleItem<>(wyvernCritDmg));
+
+        ITEM_DRACONIC_CRIT_DMG = ITEMS.register("item_draconic_crit_dmg",
+                () -> new ModuleItem<>(draconicCritDmg));
+
+        ITEM_CHAOTIC_CRIT_DMG = ITEMS.register("item_chaotic_crit_dmg",
+                () -> new ModuleItem<>(chaoticCritDmg));
+
+
+        ITEM_WYVERN_FIRE = ITEMS.register("item_wyvern_fire",
+                () -> new ModuleItem<>(wyvernFire));
+
+        ITEM_DRACONIC_FIRE = ITEMS.register("item_draconic_fire",
+                () -> new ModuleItem<>(draconicFire));
+
+        ITEM_CHAOTIC_FIRE = ITEMS.register("item_chaotic_fire",
+                () -> new ModuleItem<>(chaoticFire));
+
+
+        ITEM_DRACONIC_HOMING = ITEMS.register("item_draconic_homing",
+                () -> new ModuleItem<>(draconicHoming));
+
+        ITEM_CHAOTIC_HOMING = ITEMS.register("item_chaotic_homing",
+                () -> new ModuleItem<>(chaoticHoming));
+
+
 
         MODULES.register(modEventBus);
         ITEMS.register(modEventBus);

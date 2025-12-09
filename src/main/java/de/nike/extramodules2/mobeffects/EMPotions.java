@@ -1,14 +1,18 @@
 package de.nike.extramodules2.mobeffects;
 
+import com.brandon3055.draconicevolution.init.DEContent;
 import de.nike.extramodules2.ExtraModules2;
 import de.nike.extramodules2.utils.NikesMath;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class EMPotions {
@@ -47,6 +51,19 @@ public class EMPotions {
 
     public static void init(IEventBus eventBus) {
         POTIONS.register(eventBus);
+    }
+
+    public static void registerBrewingRecipes(RegisterBrewingRecipesEvent event) {
+
+        PotionBrewing.Builder builder = event.getBuilder();
+        builder.addMix(Potions.AWKWARD, Items.TOTEM_OF_UNDYING, BAD_OMEN);
+        builder.addMix(Potions.AWKWARD, Items.WITHER_ROSE, WITHER);
+        builder.addMix(WITHER, Items.GLOWSTONE_DUST, WITHER_STRONG);
+        builder.addMix(Potions.THICK, Items.HONEYCOMB, HEALTH_BOOST);
+        builder.addMix(HEALTH_BOOST, Items.GLOWSTONE_DUST, HEALTH_BOOST_STRONG);
+        builder.addMix(Potions.STRONG_SWIFTNESS, Items.SUGAR, HASTE);
+        builder.addMix(HASTE, Items.GLOWSTONE_DUST, STRONG_HASTE);
+        builder.addMix(WITHER_STRONG,DEContent.CHAOS_FRAG_MEDIUM.get(), CHAOS);
     }
 
 }

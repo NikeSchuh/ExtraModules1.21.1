@@ -20,4 +20,8 @@ public class EMModuleTypes {
     public static final ModuleType<DefenseData> DEFENSE_MODULE = (ModuleType<DefenseData>)new ModuleTypeImpl<>("defense_module", 1, 1, ModuleCategory.CHESTPIECE);
     public static final ModuleType<EffectData> EFFECT = new ModuleTypeImpl<>("effect", 1, 2, new ModuleCategory[] {EMModuleCategories.EFFECT});
 
+    public static final ModuleType<PistolData> PISTOL = new ModuleTypeImpl<>("pistol", 1, 1, new ModuleCategory[] {EMModuleCategories.PISTOL});
+    public static final ModuleType<PistolHomingData> PISTOL_HOMING = new ModuleTypeImpl<>("pistol_homing", 2, 2, new ModuleCategory[] {EMModuleCategories.PISTOL}).setMaxInstallable(1);
+
+
 }

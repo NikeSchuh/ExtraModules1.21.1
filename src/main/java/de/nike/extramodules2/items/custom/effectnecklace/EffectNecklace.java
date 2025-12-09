@@ -46,24 +46,26 @@ public class EffectNecklace extends ModularEnergyItem implements ICurioItem {
     }
 
     @Override
-    public void equipmentTick(ItemStack stack, LivingEntity livingEntity) {
+    public void curioTick(SlotContext slotContext, ItemStack stack) {
         ModuleHost moduleHost = DECapabilities.getHost(stack);
         IOPStorage opStorage = EnergyUtils.getStorage(stack);
-        if(moduleHost != null && opStorage != null) {
-            EffectData effectData = moduleHost.getModuleData(EMModuleTypes.EFFECT);
-            if(effectData != null) {
-                int opCost = effectData.getTickCost();
-                if(opStorage.getOPStored() > opCost) {
-                    for(Holder<MobEffect> effect : effectData.getAmpMap().keySet()) {
-                        int amp = effectData.getAmpMap().get(effect) - 1;
-                        if(NecklaceEffectRules.hasCap(effect)) amp = Math.min(amp, NecklaceEffectRules.getCap(effect));
-                        int delay = NecklaceEffectRules.getDelay(effect);
-                        if(livingEntity.tickCount % delay == 0) {
-                            livingEntity.addEffect(new MobEffectInstance(effect, delay + 1, amp));
-                        }
-                    }
+        LivingEntity livingEntity = slotContext.entity();
+        if (livingEntity == null) return;
+        if (moduleHost == null && opStorage == null) return;
+        EffectData effectData = moduleHost.getModuleData(EMModuleTypes.EFFECT);
+        if (effectData == null) return;
+        int opCost = effectData.getTickCost();
+        if (opStorage.getOPStored() > opCost) {
+            opStorage.modifyEnergyStored(-opCost);
+            for (Holder<MobEffect> effect : effectData.getAmpMap().keySet()) {
+                int amp = effectData.getAmpMap().get(effect) - 1;
+                if (NecklaceEffectRules.hasCap(effect)) amp = Math.min(amp, NecklaceEffectRules.getCap(effect));
+                int delay = NecklaceEffectRules.getDelay(effect);
+                if (livingEntity.tickCount % delay == 0) {
+                    livingEntity.addEffect(new MobEffectInstance(effect, delay + 1, amp));
                 }
             }
         }
+
     }
 }

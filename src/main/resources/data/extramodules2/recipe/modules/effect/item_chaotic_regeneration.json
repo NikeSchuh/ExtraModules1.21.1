@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#R#",
+    "D#D",
+    "#R#"
+  ],
+  "key": {
+    "#": {
+      "item": "draconicevolution:large_chaos_frag"
+    },
+    "D": {
+      "item": "extramodules2:item_draconic_regeneration"
+    },
+    "R": {
+      "item": "draconicevolution:awakened_core"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_chaotic_regeneration",
+    "count": 1
+  }
+}

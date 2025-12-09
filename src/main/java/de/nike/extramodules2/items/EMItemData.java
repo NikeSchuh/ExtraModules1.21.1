@@ -22,6 +22,14 @@ public class EMItemData {
                             .build()
             );
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> PISTOL_SHOOT_COOLDOWN =
+            DATA.register("pistol_shoot_cooldown", () ->
+                    DataComponentType.<Integer>builder()
+                            .persistent(Codec.INT)
+                            .networkSynchronized(ByteBufCodecs.INT)
+                            .build()
+            );
+
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> OXYGEN_STORAGE =
             DATA.register("oxygen_storage", () ->
                     DataComponentType.<Integer>builder()

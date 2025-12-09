@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#D#",
+    "DKD",
+    "#D#"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:ingots/draconium"
+    },
+    "K": {
+      "item": "extramodules2:advanced_module_core"
+    },
+    "D": {
+      "type": "neoforge:components",
+      "items": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:regeneration"
+        }
+      }
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_wyvern_regeneration",
+    "count": 1
+  }
+}

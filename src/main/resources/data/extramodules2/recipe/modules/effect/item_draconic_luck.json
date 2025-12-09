@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#P#",
+    "ABA",
+    "#P#"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:ingots/draconium_awakened"
+    },
+    "B": {
+      "item": "extramodules2:advanced_module_core"
+    },
+    "A": {
+      "item": "draconicevolution:wyvern_core"
+    },
+    "P": {
+      "item": "minecraft:lapis_lazuli"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_draconic_luck",
+    "count": 1
+  }
+}

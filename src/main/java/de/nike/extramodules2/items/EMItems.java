@@ -4,6 +4,7 @@ import com.brandon3055.brandonscore.api.TechLevel;
 import com.brandon3055.draconicevolution.init.TechProperties;
 import de.nike.extramodules2.ExtraModules2;
 import de.nike.extramodules2.items.custom.AntiPotionItem;
+import de.nike.extramodules2.items.custom.ModularPistol;
 import de.nike.extramodules2.items.custom.effectnecklace.EffectNecklace;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
@@ -32,6 +33,10 @@ public class EMItems {
     public static final DeferredItem<Item> WYVERN_EFFECT_NECKLACE = ITEMS.register("wyvern_effect_necklace", () -> new EffectNecklace((TechProperties) new TechProperties(TechLevel.WYVERN).stacksTo(1), 3, 3));
     public static final DeferredItem<Item> DRACONIC_EFFECT_NECKLACE = ITEMS.register("draconic_effect_necklace", () -> new EffectNecklace((TechProperties) new TechProperties(TechLevel.DRACONIC).stacksTo(1), 4, 4));
     public static final DeferredItem<Item> CHAOTIC_EFFECT_NECKLACE = ITEMS.register("chaotic_effect_necklace", () -> new EffectNecklace((TechProperties) new TechProperties(TechLevel.CHAOTIC).stacksTo(1), 5, 5));
+
+    public static final DeferredItem<Item> WYVERN_PISTOL = ITEMS.register("wyvern_pistol", () -> new ModularPistol((TechProperties) new TechProperties(TechLevel.WYVERN).stacksTo(1), 6, 4, 10f));
+    public static final DeferredItem<Item> DRACONIC_PISTOL = ITEMS.register("draconic_pistol", () -> new ModularPistol((TechProperties) new TechProperties(TechLevel.DRACONIC).stacksTo(1), 9, 4, 15f));
+    public static final DeferredItem<Item> CHAOTIC_PISTOL = ITEMS.register("chaotic_pistol", () -> new ModularPistol((TechProperties) new TechProperties(TechLevel.CHAOTIC).stacksTo(1), 11, 5, 20f));
 
 
     public static void init(IEventBus eventBus) {

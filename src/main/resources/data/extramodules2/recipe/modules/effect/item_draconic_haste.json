@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#R#",
+    "DKD",
+    "#R#"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:ingots/draconium_awakened"
+    },
+    "K": {
+      "item": "extramodules2:superior_module_core"
+    },
+    "D": {
+      "item": "extramodules2:item_wyvern_haste"
+    },
+    "R": {
+      "item": "draconicevolution:awakened_core"
+    }
+  },
+  "result": {
+    "id": "extramodules2:item_draconic_haste",
+    "count": 1
+  }
+}
